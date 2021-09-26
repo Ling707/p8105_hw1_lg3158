@@ -8,23 +8,59 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# Problem 1
+Create a dataframe comprised of:
+  - a random sample of size 10 from a standard Normal distribution
+  - a logical vector indicating whether elements of the sample are greater than 0
+  - a character vector of length 10
+  - a factor vector of length 10, with 3 different factor “levels”
+```{r Problem 1-create df}
+library(tidyverse)
 
-## R Markdown
+p1 <- tibble(
+  v_random = rnorm(10),
+  v_pos = ifelse(v_random > 0, "yes", "no"),
+  v_char = as.character(c("a","b","c","d","e","f","g","h","i","j")),
+  v_fac = as.factor(c("i","ii","iii","iii","ii","i","ii","iii","iii","iii"))
+  )
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+mean(pull(p1,v_random))
+mean(pull(p1,v_pos))
+mean(pull(p1,v_char))
+mean(pull(p1,v_fac))
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```
+From the output above, only the mean of the random sample of size from a standard Normal distribution works. The other 3 don't work.
 
-```{r cars}
-summary(cars)
+Transform the data type of the 3 variables:
+```{r Problem 1-data type transformation, eval=FALSE}
+as.numeric(pull(p1,v_pos))
+as.numeric(pull(p1,v_char))
+as.numeric(pull(p1,v_fac))
+```
+From the console, the character variable and the logic vector cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.
+
+Because the logic vector and the character variables are constructed by characters, but the factor vector has 3 levels ("i","ii","iii") that can be transformed into numbers. It partially helps explain the errors when calculating the mean because the factor vector with 3 levels cannot be transformed into numeric automatically before calculating the mean.
+
+# Problem 2
+
+Load the `penguins` dataset:
+
+```{r Problem 2-load the dataset, eval=F, echo=T}
+data("penguins", package="palmerpenguins")
+summary(penguins)
+```
+- The data in this dataset include `skimr::skim(penguins)`.
+- The dataset is a `nrow(penguins)` x `ncol(penguins)` dataframe.
+- The mean flipper length is `mean(pull(penguins,flipper_length_mm))`.
+
+Make a scatterplot of `flipper_length_mm(y) vs. bill_length_mm(x)` in different `species`.
+```{r Problem 2-scatterplot,eval=T echo=T}
+ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point()
+
+ggsave("p8105_hw1_lg3158_Q2scatter.tiff",plot = last_plot(), path = NULL)
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
