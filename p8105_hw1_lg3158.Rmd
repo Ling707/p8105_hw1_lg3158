@@ -55,7 +55,8 @@ summary(penguins)
 - The mean flipper length is `mean(pull(penguins,flipper_length_mm))`.
 
 Make a scatterplot of `flipper_length_mm(y) vs. bill_length_mm(x)` in different `species`.
-```{r Problem 2-scatterplot,eval=T echo=T}
+```{r Problem 2-scatterplot}
+library(palmerpenguins)
 ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point()
 
