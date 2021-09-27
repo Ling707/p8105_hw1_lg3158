@@ -10,10 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 # Problem 1
 Create a dataframe comprised of:
+  
   - a random sample of size 10 from a standard Normal distribution
   - a logical vector indicating whether elements of the sample are greater than 0
   - a character vector of length 10
   - a factor vector of length 10, with 3 different factor “levels”
+
 ```{r Problem 1-create df}
 library(tidyverse)
 
