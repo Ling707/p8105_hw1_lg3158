@@ -191,7 +191,7 @@ pre code {
   )
 
 mean(pull(p1,v_random))</code></pre>
-<pre><code>## [1] 0.2983716</code></pre>
+<pre><code>## [1] -0.3294767</code></pre>
 <pre class="r"><code>mean(pull(p1,v_pos))</code></pre>
 <pre><code>## Warning in mean.default(pull(p1, v_pos)): argument is not numeric or logical:
 ## returning NA</code></pre>
@@ -215,15 +215,181 @@ as.numeric(pull(p1,v_fac))</code></pre>
 <div id="problem-2" class="section level1">
 <h1>Problem 2</h1>
 <p>Load the <code>penguins</code> dataset:</p>
-<pre class="r"><code>data(&quot;penguins&quot;, package=&quot;palmerpenguins&quot;)
-summary(penguins)</code></pre>
+<pre class="r"><code>data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)</code></pre>
 <ul>
-<li>The data in this dataset include <code>skimr::skim(penguins)</code>.</li>
-<li>The dataset is a <code>nrow(penguins)</code> x <code>ncol(penguins)</code> dataframe.</li>
-<li>The mean flipper length is <code>mean(pull(penguins,flipper_length_mm))</code>.</li>
+<li>The data in this dataset include</li>
+</ul>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">penguins</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">344</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">species</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Ade: 152, Gen: 124, Chi: 68</td>
+</tr>
+<tr class="even">
+<td align="left">island</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Bis: 168, Dre: 124, Tor: 52</td>
+</tr>
+<tr class="odd">
+<td align="left">sex</td>
+<td align="right">11</td>
+<td align="right">0.97</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">mal: 168, fem: 165</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bill_length_mm</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">43.92</td>
+<td align="right">5.46</td>
+<td align="right">32.1</td>
+<td align="right">39.23</td>
+<td align="right">44.45</td>
+<td align="right">48.5</td>
+<td align="right">59.6</td>
+<td align="left">▃▇▇▆▁</td>
+</tr>
+<tr class="even">
+<td align="left">bill_depth_mm</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">17.15</td>
+<td align="right">1.97</td>
+<td align="right">13.1</td>
+<td align="right">15.60</td>
+<td align="right">17.30</td>
+<td align="right">18.7</td>
+<td align="right">21.5</td>
+<td align="left">▅▅▇▇▂</td>
+</tr>
+<tr class="odd">
+<td align="left">flipper_length_mm</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">200.92</td>
+<td align="right">14.06</td>
+<td align="right">172.0</td>
+<td align="right">190.00</td>
+<td align="right">197.00</td>
+<td align="right">213.0</td>
+<td align="right">231.0</td>
+<td align="left">▂▇▃▅▂</td>
+</tr>
+<tr class="even">
+<td align="left">body_mass_g</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">4201.75</td>
+<td align="right">801.95</td>
+<td align="right">2700.0</td>
+<td align="right">3550.00</td>
+<td align="right">4050.00</td>
+<td align="right">4750.0</td>
+<td align="right">6300.0</td>
+<td align="left">▃▇▆▃▂</td>
+</tr>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2008.03</td>
+<td align="right">0.82</td>
+<td align="right">2007.0</td>
+<td align="right">2007.00</td>
+<td align="right">2008.00</td>
+<td align="right">2009.0</td>
+<td align="right">2009.0</td>
+<td align="left">▇▁▇▁▇</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>The dataset is a 344 x 8 dataframe.</p></li>
+<li><p>The mean flipper length is 200.9152047 mm.</p></li>
 </ul>
 <p>Make a scatterplot of <code>flipper_length_mm(y) vs. bill_length_mm(x)</code> in different <code>species</code>.</p>
-<pre class="r"><code>library(palmerpenguins)
+<pre class="r"><code>library(palmerpenguins) #add the package to make R markdown knit into Html
 ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point()</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>

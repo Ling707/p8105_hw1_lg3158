@@ -38,7 +38,7 @@ as.numeric(pull(p1,v_pos))
 as.numeric(pull(p1,v_char))
 as.numeric(pull(p1,v_fac))
 ```
-From the console, the character variable and the logic vector cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.
+  From the console, the character variable and the logic vector cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.
 
 Because the logic vector and the character variables are constructed by characters, but the factor vector has 3 levels ("i","ii","iii") that can be transformed into numbers. It partially helps explain the errors when calculating the mean because the factor vector with 3 levels cannot be transformed into numeric automatically before calculating the mean.
 
@@ -47,16 +47,19 @@ Because the logic vector and the character variables are constructed by characte
 Load the `penguins` dataset:
 
 ```{r Problem 2-load the dataset, eval=F, echo=T}
-data("penguins", package="palmerpenguins")
-summary(penguins)
+data("penguins", package = "palmerpenguins")
 ```
-- The data in this dataset include `skimr::skim(penguins)`.
-- The dataset is a `nrow(penguins)` x `ncol(penguins)` dataframe.
-- The mean flipper length is `mean(pull(penguins,flipper_length_mm))`.
+  - The data in this dataset include 
+    `r data("penguins", package = "palmerpenguins")`
+    `r skimr::skim(penguins)`
+  
+  - The dataset is a `r nrow(penguins)` x `r ncol(penguins)` dataframe.
+  
+  - The mean flipper length is `r mean(pull(penguins,flipper_length_mm),na.rm=T)` mm.
 
 Make a scatterplot of `flipper_length_mm(y) vs. bill_length_mm(x)` in different `species`.
 ```{r Problem 2-scatterplot}
-library(palmerpenguins)
+library(palmerpenguins) #add the package to make R markdown knit into Html
 ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point()
 
