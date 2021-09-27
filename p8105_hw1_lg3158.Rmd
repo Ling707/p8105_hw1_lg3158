@@ -19,6 +19,8 @@ Create a dataframe comprised of:
 ```{r Problem 1-create df}
 library(tidyverse)
 
+set.seed(1) #set seed to make the result reproducible
+
 p1 <- tibble(
   v_random = rnorm(10),
   v_pos = v_random > 0,
@@ -36,7 +38,7 @@ mean(pull(p1,v_fac))
 ```
 From the output above, only the mean of the random sample of size from a standard Normal distribution and the logic variable work. The other 2 don't work.
 
-Transform the data type of the 3 variables:
+Transform the data type of the 2 variables:
 ```{r Problem 1-data type transformation, eval=FALSE}
 as.numeric(pull(p1,v_char))
 as.numeric(pull(p1,v_fac))
