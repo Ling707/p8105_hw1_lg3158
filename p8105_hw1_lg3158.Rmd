@@ -19,10 +19,12 @@ library(tidyverse)
 
 p1 <- tibble(
   v_random = rnorm(10),
-  v_pos = ifelse(v_random > 0, "yes", "no"),
+  v_pos = v_random > 0,
   v_char = as.character(c("a","b","c","d","e","f","g","h","i","j")),
   v_fac = as.factor(c("i","ii","iii","iii","ii","i","ii","iii","iii","iii"))
   )
+
+knitr::kable(p1)
 
 mean(pull(p1,v_random))
 mean(pull(p1,v_pos))
@@ -30,17 +32,16 @@ mean(pull(p1,v_char))
 mean(pull(p1,v_fac))
 
 ```
-From the output above, only the mean of the random sample of size from a standard Normal distribution works. The other 3 don't work.
+From the output above, only the mean of the random sample of size from a standard Normal distribution and the logic variable work. The other 2 don't work.
 
 Transform the data type of the 3 variables:
 ```{r Problem 1-data type transformation, eval=FALSE}
-as.numeric(pull(p1,v_pos))
 as.numeric(pull(p1,v_char))
 as.numeric(pull(p1,v_fac))
 ```
-  From the console, the character variable and the logic vector cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.
+  From the console, the character variable cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.
 
-Because the logic vector and the character variables are constructed by characters, but the factor vector has 3 levels ("i","ii","iii") that can be transformed into numbers. It partially helps explain the errors when calculating the mean because the factor vector with 3 levels cannot be transformed into numeric automatically before calculating the mean.
+Because the character variable is constructed by characters, but the factor vector has 3 levels ("i","ii","iii") that can be transformed into numbers. It partially helps explain the errors when calculating the mean because the factor vector with 3 levels cannot be transformed into numeric automatically before calculating the mean.
 
 # Problem 2
 
@@ -49,8 +50,7 @@ Load the `penguins` dataset:
 ```{r Problem 2-load the dataset, eval=F, echo=T}
 data("penguins", package = "palmerpenguins")
 ```
-  - The data in this dataset include 
-    `r data("penguins", package = "palmerpenguins")`
+  - The data in this dataset include the variables as follow: `r data("penguins", package = "palmerpenguins")` `r names(penguins)`. The brief summary of the dataset is below. 
     `r skimr::skim(penguins)`
   
   - The dataset is a `r nrow(penguins)` x `r ncol(penguins)` dataframe.

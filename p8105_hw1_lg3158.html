@@ -185,17 +185,88 @@ pre code {
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>p1 &lt;- tibble(
   v_random = rnorm(10),
-  v_pos = ifelse(v_random &gt; 0, &quot;yes&quot;, &quot;no&quot;),
+  v_pos = v_random &gt; 0,
   v_char = as.character(c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,&quot;g&quot;,&quot;h&quot;,&quot;i&quot;,&quot;j&quot;)),
   v_fac = as.factor(c(&quot;i&quot;,&quot;ii&quot;,&quot;iii&quot;,&quot;iii&quot;,&quot;ii&quot;,&quot;i&quot;,&quot;ii&quot;,&quot;iii&quot;,&quot;iii&quot;,&quot;iii&quot;))
   )
 
-mean(pull(p1,v_random))</code></pre>
-<pre><code>## [1] -0.3294767</code></pre>
+knitr::kable(p1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">v_random</th>
+<th align="left">v_pos</th>
+<th align="left">v_char</th>
+<th align="left">v_fac</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.4148635</td>
+<td align="left">FALSE</td>
+<td align="left">a</td>
+<td align="left">i</td>
+</tr>
+<tr class="even">
+<td align="right">0.1373545</td>
+<td align="left">TRUE</td>
+<td align="left">b</td>
+<td align="left">ii</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.9971815</td>
+<td align="left">FALSE</td>
+<td align="left">c</td>
+<td align="left">iii</td>
+</tr>
+<tr class="even">
+<td align="right">0.1176539</td>
+<td align="left">TRUE</td>
+<td align="left">d</td>
+<td align="left">iii</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.9269341</td>
+<td align="left">FALSE</td>
+<td align="left">e</td>
+<td align="left">ii</td>
+</tr>
+<tr class="even">
+<td align="right">-0.1752454</td>
+<td align="left">FALSE</td>
+<td align="left">f</td>
+<td align="left">i</td>
+</tr>
+<tr class="odd">
+<td align="right">0.4324859</td>
+<td align="left">TRUE</td>
+<td align="left">g</td>
+<td align="left">ii</td>
+</tr>
+<tr class="even">
+<td align="right">0.1622996</td>
+<td align="left">TRUE</td>
+<td align="left">h</td>
+<td align="left">iii</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.5578735</td>
+<td align="left">FALSE</td>
+<td align="left">i</td>
+<td align="left">iii</td>
+</tr>
+<tr class="even">
+<td align="right">-1.2531602</td>
+<td align="left">FALSE</td>
+<td align="left">j</td>
+<td align="left">iii</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mean(pull(p1,v_random))</code></pre>
+<pre><code>## [1] -0.3475464</code></pre>
 <pre class="r"><code>mean(pull(p1,v_pos))</code></pre>
-<pre><code>## Warning in mean.default(pull(p1, v_pos)): argument is not numeric or logical:
-## returning NA</code></pre>
-<pre><code>## [1] NA</code></pre>
+<pre><code>## [1] 0.4</code></pre>
 <pre class="r"><code>mean(pull(p1,v_char))</code></pre>
 <pre><code>## Warning in mean.default(pull(p1, v_char)): argument is not numeric or logical:
 ## returning NA</code></pre>
@@ -204,20 +275,19 @@ mean(pull(p1,v_random))</code></pre>
 <pre><code>## Warning in mean.default(pull(p1, v_fac)): argument is not numeric or logical:
 ## returning NA</code></pre>
 <pre><code>## [1] NA</code></pre>
-<p>From the output above, only the mean of the random sample of size from a standard Normal distribution works. The other 3 don’t work.</p>
+<p>From the output above, only the mean of the random sample of size from a standard Normal distribution and the logic variable work. The other 2 don’t work.</p>
 <p>Transform the data type of the 3 variables:</p>
-<pre class="r"><code>as.numeric(pull(p1,v_pos))
-as.numeric(pull(p1,v_char))
+<pre class="r"><code>as.numeric(pull(p1,v_char))
 as.numeric(pull(p1,v_fac))</code></pre>
-<p>From the console, the character variable and the logic vector cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.</p>
-<p>Because the logic vector and the character variables are constructed by characters, but the factor vector has 3 levels (“i”,“ii”,“iii”) that can be transformed into numbers. It partially helps explain the errors when calculating the mean because the factor vector with 3 levels cannot be transformed into numeric automatically before calculating the mean.</p>
+<p>From the console, the character variable cannot be transformed into numeric variables, but the factor vector can be transformed into 1, 2, 3.</p>
+<p>Because the character variable is constructed by characters, but the factor vector has 3 levels (“i”,“ii”,“iii”) that can be transformed into numbers. It partially helps explain the errors when calculating the mean because the factor vector with 3 levels cannot be transformed into numeric automatically before calculating the mean.</p>
 </div>
 <div id="problem-2" class="section level1">
 <h1>Problem 2</h1>
 <p>Load the <code>penguins</code> dataset:</p>
 <pre class="r"><code>data(&quot;penguins&quot;, package = &quot;palmerpenguins&quot;)</code></pre>
 <ul>
-<li>The data in this dataset include</li>
+<li>The data in this dataset include the variables as follow: species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex, year. The brief summary of the dataset is below.</li>
 </ul>
 <table>
 <caption>Data summary</caption>
